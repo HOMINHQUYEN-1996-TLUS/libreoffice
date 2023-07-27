@@ -1,0 +1,52 @@
+REM  *****  BASIC  *****
+
+Sub ExampleIfThenDate
+	Dim oDoc as object
+	Dim oSheets as object
+	Dim oSheet as object
+	Dim i as Long
+	Dim nLastRow as Long
+	
+	Dim count as Integer
+	
+	oDoc = ThisComponent
+	oSheets = oDoc.getSheets()
+	
+	count = 0
+	
+	Dim condition as String
+	condition = InputBox("Nhập huyện cần lọc:", "Thông Báo", "")
+	
+	oSheet = oDoc.createInstance("com.sun.star.sheet.Spreadsheet")
+	oSheet.setName("NewSheet")
+	oSheets.insertByName(condition,oSheet)
+	
+	Dim oSourceSheet as object
+	oSourceSheet = oSheets.getByName("Sheet1")
+	
+	nLastRow = oSourceSheet.getRows().getCount()
+	
+	
+	
+	
+	Dim nTargetRow as Long
+	nTargetRow = 0
+	for i = 0 To nLastRow - 1
+		if oSourceSheet.getCellByPosition(1,i).getString() <> "" Then
+			if oSourceSheet.getCellByPosition(1,i).getString() = condition Then
+				count = count + 1
+				nTargetRow = nTargetRow + 1
+				oSheet.getCellByPosition(1,nTargetRow).setString(oSourceSheet.getCellByPosition(1,i).String)
+				oSheet.getCellByPosition(2,nTargetRow).setString(oSourceSheet.getCellByPosition(2,i).String)
+			End if
+		Else
+			MsgBox("Bạn Đã Lọc hết data", 4, "Tiêu đề hộp thoại")
+			exit for
+		End if
+	Next i	
+	
+	Dim sNewName as String
+	sNewName = condition + " - "+count
+	oSheet.Name = sNewName
+	
+End Sub
