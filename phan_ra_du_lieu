@@ -1,6 +1,6 @@
 REM  *****  BASIC  *****
 
-Sub ExampleIfThenDate
+Sub Loc()
 	Dim oDoc as object
 	Dim oSheets as object
 	Dim oSheet as object
@@ -15,29 +15,49 @@ Sub ExampleIfThenDate
 	count = 0
 	
 	Dim condition as String
-	condition = InputBox("Nhập huyện cần lọc:", "Thông Báo", "")
+	condition = InputBox("Nhap vao ten cần tìm","Thông báo")
+	
+	Dim vitri as Integer
+	vitri = InputBox("Nhap vao so cột","Thông báo")
 	
 	oSheet = oDoc.createInstance("com.sun.star.sheet.Spreadsheet")
 	oSheet.setName("NewSheet")
 	oSheets.insertByName(condition,oSheet)
 	
 	Dim oSourceSheet as object
-	oSourceSheet = oSheets.getByName("Sheet1")
+	oSourceSheet = oSheets.getByName("Sheet3")
 	
 	nLastRow = oSourceSheet.getRows().getCount()
 	
 	
-	
+	print(oSourceSheet.getCellByPosition(1,0).getString())
 	
 	Dim nTargetRow as Long
 	nTargetRow = 0
 	for i = 0 To nLastRow - 1
-		if oSourceSheet.getCellByPosition(1,i).getString() <> "" Then
-			if oSourceSheet.getCellByPosition(1,i).getString() = condition Then
+		if oSourceSheet.getCellByPosition(vitri,i).getString() <> "" Then
+			oSheet.getCellByPosition(0,0).setString(oSourceSheet.getCellByPosition(0,0).String)
+			oSheet.getCellByPosition(1,0).setString(oSourceSheet.getCellByPosition(1,0).String)
+			oSheet.getCellByPosition(2,0).setString(oSourceSheet.getCellByPosition(2,0).String)
+			oSheet.getCellByPosition(3,0).setString(oSourceSheet.getCellByPosition(3,0).String)
+			oSheet.getCellByPosition(4,0).setString(oSourceSheet.getCellByPosition(4,0).String)
+			oSheet.getCellByPosition(5,0).setString(oSourceSheet.getCellByPosition(5,0).String)
+			oSheet.getCellByPosition(6,0).setString(oSourceSheet.getCellByPosition(6,0).String)
+			oSheet.getCellByPosition(7,0).setString(oSourceSheet.getCellByPosition(7,0).String)
+			oSheet.getCellByPosition(8,0).setString(oSourceSheet.getCellByPosition(8,0).String)
+			if oSourceSheet.getCellByPosition(vitri,i).getString() = condition Then
 				count = count + 1
 				nTargetRow = nTargetRow + 1
+				oSheet.getCellByPosition(0,nTargetRow).setString(oSourceSheet.getCellByPosition(0,i).String)
 				oSheet.getCellByPosition(1,nTargetRow).setString(oSourceSheet.getCellByPosition(1,i).String)
 				oSheet.getCellByPosition(2,nTargetRow).setString(oSourceSheet.getCellByPosition(2,i).String)
+				oSheet.getCellByPosition(3,nTargetRow).setString(oSourceSheet.getCellByPosition(3,i).String)
+				oSheet.getCellByPosition(4,nTargetRow).setString(oSourceSheet.getCellByPosition(4,i).String)
+				oSheet.getCellByPosition(5,nTargetRow).setString(oSourceSheet.getCellByPosition(5,i).String)
+				oSheet.getCellByPosition(6,nTargetRow).setString(oSourceSheet.getCellByPosition(6,i).String)
+				oSheet.getCellByPosition(7,nTargetRow).setString(oSourceSheet.getCellByPosition(7,i).String)
+				oSheet.getCellByPosition(8,nTargetRow).setString(oSourceSheet.getCellByPosition(8,i).String)
+				
 			End if
 		Else
 			MsgBox("Bạn Đã Lọc hết data", 4, "Tiêu đề hộp thoại")
